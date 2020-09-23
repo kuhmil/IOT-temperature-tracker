@@ -1,2 +1,0 @@
-reading log
-25.812 writing temp data to database

@@ -1,0 +1,131 @@
+html {
+  height: 100%;
+}
+
+body {
+  /*background: white;*/
+  background: white;
+  color: black;
+  padding:1;
+  text-align: center;
+  font-family: Audiowide;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+#background {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 50%;
+  height: 100%;
+  background-color: black;
+  z-index: 1;  
+}
+
+.black-font{
+  letter-spacing: 30px;
+  font-size: 100px;
+  color: black;
+  text-align: right;
+  /*font-family: Arial;*/
+  margin-right:3%;
+  /*top:50px; */
+  margin-top:1.8%; 
+}
+
+.black-reading{
+  letter-spacing: 30px;
+  font-size: 30px;
+  color: black;
+  text-align: right;
+  font-family: Arial;
+  margin-top:16.6%;
+  margin-right:10%;
+}
+
+.white-font{
+  letter-spacing: 30px;
+  font-size: 90px;
+  color: white;
+  text-align: right;
+  /*font-family: Arial;*/
+  margin-left:8%;
+  margin-top:4%; 
+}
+
+.white-reading{
+  letter-spacing: 30px;
+  font-size: 30px;
+  color: white;
+  text-align: right;
+  font-family: Arial;
+  margin-top:33.5%;
+  margin-right:33%;
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 80vw;
+  margin: 0 auto;
+  min-height: 100vh;
+
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  -ms-transform: translate(-40%, -0%);
+  transform: translate(-50%, -50%);
+}
+
+.button {
+  background-color: black;
+  color: white;
+  padding: 5px;
+  width: 400px;
+  height: 400px;
+  /*display: inline-block;*/
+  /*font-size: 16px;*/
+/*  margin: 2px 2px;
+  cursor: pointer;*/
+  border: 20px solid white;
+  letter-spacing: 15px;
+  font-size: 40px;
+  text-align: center;
+  font-family: Audiowide;
+  outline:none; 
+
+}
+
+.button1 {border-radius: 12px;}
+
+.hover {
+  background-color: black;
+  color: white;
+  padding: 5px;
+  width: 400px;
+  height: 400px;
+  /*display: inline-block;*/
+  /*font-size: 16px;*/
+/*  margin: 2px 2px;
+  cursor: pointer;*/
+  border: 20px solid white;
+  letter-spacing: 15px;
+  font-size: 40px;
+  text-align: center;
+
+}
+
+.hover:hover {
+  background-image: linear-gradient(to right, black , grey);
+  color: white;
+}
+

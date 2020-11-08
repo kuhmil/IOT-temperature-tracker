@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+from tkinter import *
 import os
 import glob
 import time
@@ -11,6 +14,7 @@ dbname='/home/pi/interbrew_data/interbrew.db'
 sampleFreq = 2 # time in seconds
 # get data from DHT sensor
 
+
 os.system('sudo modprobe w1-gpio')
 os.system('sudo modprobe w1-therm')
 
@@ -22,6 +26,7 @@ device_file = device_folder + '/w1_slave'
 relay_cold = 15
 relay_hot = 16
 #temp_probe = 13
+
 
 def blink(pin):
     GPIO.setwarnings(False)    # Ignore warning for now
@@ -65,9 +70,9 @@ def logData (temp_c, temp_f):
     conn=sqlite3.connect(dbname)
     curs=conn.cursor()
     print("reading log")
-    # curs.execute("INSERT INTO TEMP_data values(datetime('now','localtime'), (?))", (temp,))
+    #curs.execute("INSERT INTO TEMP (date('now','localtime'),time('now','localtime'),temp_c,temp_f) VALUES (?,?,?,?)" (date, time, temp_c, temp_f))
     curs.execute("INSERT INTO TEMP values(date('now','localtime'),time('now','localtime'), (?), (?))", (temp_c, temp_f))
-    # curs.execute("INSERT INTO TEMP_data(date,time,temp) VALUES ('2020-09-05','18:00:02','25')");
+    #curs.execute(INSERT INTO DATA(id, date('now','localtime'), time('now','localtime'), temp_c, temp_f) VALUES ((?), (?),  (?), (?), (?)))
     conn.commit()
     conn.close()
 # display database data
@@ -85,18 +90,49 @@ def main():
         time.sleep(sampleFreq)
     displayData()
 
+
+def toggle():
+	if GPIO.input(temp_c):
+		GPIO.output(24, GPIO.LOW)
+		toggleButton["text"] = "Turn LED On"
+	else:
+		GPIO.output(24, GPIO.HIGH)
+		toggleButton["text"] = "Turn LED Off"
+
+
+
 temp_c, temp_f = read_temp()
 logData(float(temp_c), float(temp_f))
 main()
 print(f"{temp_c}, {temp_f} writing temp data to database")
 
-#try:
-    #while True:
-        #temp_c = read_temp()
-        #logData(int(temp_c))
-       # time.sleep(sampleFreq)
-       # print("temperature")
-        #main()
-        #print(f"{temp_c} writing temp data to database")
-#except KeyboardInterrupt:
-#    GPIO.cleanup()
+# gui = Tk(className='Python Examples - Button')
+# gui.geometry("500x200")
+
+window = Tk()
+window.title("Start/Stop Button")
+window.geometry('500x200')
+# window.configure(bg='white')
+temp_c=str(23.2)
+
+
+def temp_button():
+    if tmp_btn['text'] == temp_c+"°C":
+        tmp_btn.configure(text=temp_f+"°F")
+    else:
+        tmp_btn.configure(text=temp_c+"°C")
+
+# + "°C")
+
+tmp_btn = Button(window, text=temp_c+"°C", command=temp_button, width=70, height=7, bg='black', fg='white', activebackground='grey', activeforeground='white', 
+    justify=CENTER, font=('Audiowide', '48'))
+# tmp_btn.grid(column=1, row=1)
+tmp_btn.pack(side=TOP, expand=YES)
+
+# tmp_button = Button(window, text=temp_c,command=temp_button, width=70, height=7, bg='black', fg='white', activebackground='white', activeforeground='blue')
+
+
+window.mainloop()
+
+
+

@@ -6,7 +6,8 @@ def getData():
 	conn=sqlite3.connect('/home/pi/interbrew_data/interbrew.db')
 	print("connecting to db")
 	curs=conn.cursor()
-	for row in curs.execute("SELECT * FROM TEMP ORDER BY time DESC LIMIT 1"):
+	#for row in curs.execute("SELECT * FROM TEMP ORDER BY date DESC LIMIT 1")
+	for row in curs.execute("SELECT * FROM TEMP"): #ORDER BY time DESC LIMIT 1"):
 		date = str(row[0])
 		time = str(row[1])
 		temp_c = row[2]

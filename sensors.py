@@ -6,14 +6,13 @@ import glob
 import time
 import RPi.GPIO as GPIO    # Import Raspberry Pi GPIO library
 #from time import sleep
-import datetime 
+import datetime
 import time
 import sqlite3
 #import Adafruit_DHT
-dbname='/home/pi/interbrew_data/interbrew.db'
+dbname='/home/pi/Desktop/interbrew_data/interbrew.db'
 sampleFreq = 2 # time in seconds
 # get data from DHT sensor
-
 
 os.system('sudo modprobe w1-gpio')
 os.system('sudo modprobe w1-therm')
@@ -71,6 +70,7 @@ def logData (temp_c, temp_f):
     curs=conn.cursor()
     print("reading log")
     #curs.execute("INSERT INTO TEMP (date('now','localtime'),time('now','localtime'),temp_c,temp_f) VALUES (?,?,?,?)" (date, time, temp_c, temp_f))
+    #CREATE TABLE TEMP(date DATETIME, time DATETIME, temp_c NUMERIC, temp_f NUMERIC);
     curs.execute("INSERT INTO TEMP values(date('now','localtime'),time('now','localtime'), (?), (?))", (temp_c, temp_f))
     #curs.execute(INSERT INTO DATA(id, date('now','localtime'), time('now','localtime'), temp_c, temp_f) VALUES ((?), (?),  (?), (?), (?)))
     conn.commit()
@@ -106,33 +106,23 @@ logData(float(temp_c), float(temp_f))
 main()
 print(f"{temp_c}, {temp_f} writing temp data to database")
 
-# gui = Tk(className='Python Examples - Button')
-# gui.geometry("500x200")
 
+####GUI on touchscreen
 window = Tk()
-window.title("Start/Stop Button")
-window.geometry('500x200')
-# window.configure(bg='white')
-temp_c=str(23.2)
-
+window.title("Temperature Button")
+window.attributes('-fullscreen', True) #change to False if you don't want full screen
 
 def temp_button():
-    if tmp_btn['text'] == temp_c+"°C":
-        tmp_btn.configure(text=temp_f+"°F")
+    if tmp_btn['text'] == "Temperature: "+temp_c+"°C":
+        tmp_btn.configure(text="Temperature: "+temp_f+"°F")
     else:
-        tmp_btn.configure(text=temp_c+"°C")
+        tmp_btn.configure(text="Temperature: "+temp_c+"°C")
 
-# + "°C")
+#tmp_btn = Button(window, text="Temperature: "+temp_c+"°C", command=temp_button, width=70, height=7, justify=CENTER, font=('Audiowide', '48'))
+tmp_btn = Button(window, text="Temperature: "+temp_c+"°C", command=temp_button, width=70, height=7, bg='grey', fg='white', activebackground='black', activeforeground='white', justify=CENTER, font=('Audiowide', '48'))
 
-tmp_btn = Button(window, text=temp_c+"°C", command=temp_button, width=70, height=7, bg='black', fg='white', activebackground='grey', activeforeground='white', 
-    justify=CENTER, font=('Audiowide', '48'))
-# tmp_btn.grid(column=1, row=1)
 tmp_btn.pack(side=TOP, expand=YES)
-
-# tmp_button = Button(window, text=temp_c,command=temp_button, width=70, height=7, bg='black', fg='white', activebackground='white', activeforeground='blue')
 
 
 window.mainloop()
-
-
 
